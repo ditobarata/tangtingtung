@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jago Kali - Tantangan 50 Soal</title>
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --secondary: #2196F3;
+            --bg: #f4f7f6;
+            --text: #333;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--bg); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            min-height: 100vh;
+            margin: 0; 
+            padding: 20px; 
+        }
+
+        #game-container { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            width: 100%; 
+            max-width: 400px; 
+            text-align: center; 
+        }
+
+        /* Ini sangat penting agar layar lain tersembunyi */
+        .hidden { display: none !important; }
+
+        #progress-bar { 
+            width: 100%; height: 12px; background: #eee; border-radius: 10px; margin-bottom: 20px; overflow: hidden;
+        }
+
+        #progress-fill { 
+            height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; 
+        }
+
+        .question { font-size: 3rem; font-weight: bold; margin: 25px 0; color: var(--text); }
+
+        input#answer { 
+            font-size: 1.8rem; width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 12px; 
+            text-align: center; margin-bottom: 20px; box-sizing: border-box;
+        }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+        .stat-card { background: #f9f9f9; padding: 15px; border-radius: 12px; border: 1px solid #eee; }
+        
+        .correct-text { color: var(--primary); font-size: 1.5rem; font-weight: bold; }
+        .time-text { font-size: 1.5rem; font-weight: bold; color: var(--text); }
+
+        #detail-container {
+            max-height: 250px; overflow-y: auto; margin: 20px 0; border: 1px solid #eee; border-radius: 10px;
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th { background: #f4f4f4; padding: 10px; position: sticky; top: 0; }
+        td { padding: 8px; border-bottom: 1px solid #eee; }
+        .row-correct { color: var(--primary); font-weight: bold; }
+        .row-wrong { color: #f44336; font-weight: bold; }
+
+        button { 
+            background: var(--secondary); color: white; border: none; padding: 18px; border-radius: 12px; 
+            font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; 
+        }
+        .btn-restart { background: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="start-screen">
+        <h1>🔢 Jago Kali</h1>
+        <p>Selesaikan 50 soal perkalian puluhan secepat mungkin!</p>
+        <button onclick="startGame()">Mulai Bermain</button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+        <div id="progress-bar"><div id="progress-fill"></div></div>
+        <p>Soal ke: <span id="current-count">1</span> / 50</p>
+        <div class="question" id="question-text">-- x --</div>
+        <input type="number" id="answer" inputmode="numeric" placeholder="Jawab..." onkeyup="checkEnter(event)">
+        <button onclick="submitAnswer()">Kirim Jawaban</button>
+    </div>
+
+    <div id="result-screen" class="hidden">
+        <h2>Selesai! 🎉</h2>
+        <div class="stats-grid">
+            <div class="stat-card"><small>Benar</small><div id="final-correct" class="correct-text">0</div></div>
+            <div class="stat-card"><small>Total Waktu</small><div id="final-time" class="time-text">0s</div></div>
+        </div>
+        
+        <h3>Statistik Per Soal:</h3>
+        <div id="detail-container">
+            <table>
+                <thead>
+                    <tr><th>No</th><th>Soal</th><th>Waktu</th><th>Hasil</th></tr>
+                </thead>
+                <tbody id="stats-body"></tbody>
+            </table>
+        </div>
+        <button onclick="location.reload()" class="btn-restart">Main Lagi</button>
+    </div>
+</div>
+
+<script>
+    let currentQuestion = 0;
+    let correctAnswers = 0;
+    let startTime, questionStartTime;
+    let num1, num2, answer;
+    const totalQuestions = 50;
+    let logs = [];
+
+    function startGame() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('game-screen').classList.remove('hidden');
+        document.getElementById('result-screen').classList.add('hidden');
+        startTime = new Date();
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (currentQuestion >= totalQuestions) {
+            endGame();
+            return;
+        }
+        currentQuestion++;
+        document.getElementById('current-count').innerText = currentQuestion;
+        document.getElementById('progress-fill').style.width = (currentQuestion / totalQuestions * 100) + '%';
+        
+        num1 = Math.floor(Math.random() * 90) + 10;
+        num2 = Math.floor(Math.random() * 90) + 10;
+        answer = num1 * num2;
+
+        document.getElementById('question-text').innerText = `${num1} × ${num2}`;
+        const inputField = document.getElementById('answer');
+        inputField.value = '';
+        inputField.focus();
+        questionStartTime = new Date();
+    }
+
+    function checkEnter(e) { if (e.key === "Enter") submitAnswer(); }
+
+    function submitAnswer() {
+        const inputField = document.getElementById('answer');
+        const userAnswer = parseInt(inputField.value);
+        if (isNaN(userAnswer)) return;
+
+        const now = new Date();
+        const timeTaken = ((now - questionStartTime) / 1000).toFixed(1);
+        const isCorrect = userAnswer === answer;
+
+        if (isCorrect) correctAnswers++;
+
+        logs.push({
+            no: currentQuestion,
+            q: `${num1}×${num2}`,
+            time: timeTaken,
+            res: isCorrect ? "✅" : `❌ (${answer})`,
+            cls: isCorrect ? "row-correct" : "row-wrong"
+        });
+
+        nextQuestion();
+    }
+
+    function endGame() {
+        const endTime = new Date();
+        const totalTime = Math.floor((endTime - startTime) / 1000);
+        
+        document.getElementById('game-screen').classList.add('hidden');
+        document.getElementById('result-screen').classList.remove('hidden');
+        
+        document.getElementById('final-correct').innerText = `${correctAnswers} / ${totalQuestions}`;
+        document.getElementById('final-time').innerText = `${totalTime} detik`;
+        
+        const statsBody = document.getElementById('stats-body');
+        statsBody.innerHTML = logs.map(log => `
+            <tr>
+                <td>${log.no}</td>
+                <td>${log.q}</td>
+                <td>${log.time}s</td>
+                <td class="${log.cls}">${log.res}</td>
+            </tr>
+        `).join('');
+    }
+</script>
+</body>
+</html>
