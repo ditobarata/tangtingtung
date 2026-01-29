@@ -1,13 +1,16 @@
 :root {
-    --primary: #4CAF50;
-    --secondary: #2196F3;
-    --bg: #f4f7f6;
-    --text: #333;
+    --primary: #FF6B6B;      /* Merah Muda Ceria */
+    --secondary: #4ECDC4;    /* Hijau Toska */
+    --accent: #FFE66D;       /* Kuning Cerah */
+    --bg: #F7FFF7;           /* Putih Mint */
+    --text: #2F3E46;         /* Abu Gelap */
 }
 
 body { 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    background: var(--bg); 
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', cursive, sans-serif; 
+    background: var(--bg);
+    background-image: radial-gradient(#FF6B6B 1px, transparent 0);
+    background-size: 40px 40px; /* Pola polkadot halus di background */
     display: flex; 
     justify-content: center; 
     align-items: center;
@@ -19,49 +22,96 @@ body {
 #game-container { 
     background: white; 
     padding: 30px; 
-    border-radius: 20px; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    border-radius: 30px; /* Lebih bulat */
+    box-shadow: 0 15px 0px rgba(0,0,0,0.05), 0 20px 40px rgba(0,0,0,0.1); 
     width: 100%; 
-    max-width: 400px; 
-    text-align: center; 
+    max-width: 420px; 
+    text-align: center;
+    border: 4px solid #f0f0f0;
 }
 
-/* Ini sangat penting agar layar lain tersembunyi */
+h1 { color: var(--primary); font-size: 2.5rem; margin-top: 0; }
+
 .hidden { display: none !important; }
 
+/* Progress Bar lebih gemuk */
 #progress-bar { 
-    width: 100%; height: 12px; background: #eee; border-radius: 10px; margin-bottom: 20px; overflow: hidden;
+    width: 100%; height: 20px; background: #eee; border-radius: 20px; margin-bottom: 20px; overflow: hidden;
+    border: 3px solid #eee;
 }
 
 #progress-fill { 
-    height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; 
+    height: 100%; background: linear-gradient(90deg, var(--secondary), #A0FEFE); 
+    width: 0%; transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
 }
 
-.question { font-size: 3rem; font-weight: bold; margin: 25px 0; color: var(--text); }
+/* Soal lebih besar dan berwarna */
+.question { 
+    font-size: 3.5rem; font-weight: 900; margin: 20px 0; color: var(--text); 
+    text-shadow: 2px 2px 0px var(--accent);
+}
 
+/* Input angka lebih menarik */
 input#answer { 
-    font-size: 1.8rem; width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 12px; 
+    font-size: 2rem; width: 100%; padding: 15px; border: 4px solid #eee; border-radius: 20px; 
     text-align: center; margin-bottom: 20px; box-sizing: border-box;
+    color: var(--secondary); font-weight: bold;
 }
 
+input#answer:focus { border-color: var(--accent); outline: none; }
+
+/* Kartu Statistik */
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
-.stat-card { background: #f9f9f9; padding: 15px; border-radius: 12px; border: 1px solid #eee; }
+.stat-card { background: #FFF9E6; padding: 15px; border-radius: 20px; border: 2px dashed var(--accent); }
 
-.correct-text { color: var(--primary); font-size: 1.5rem; font-weight: bold; }
-.time-text { font-size: 1.5rem; font-weight: bold; color: var(--text); }
+.correct-text { color: var(--primary); font-size: 1.8rem; font-weight: bold; }
+.time-text { font-size: 1.8rem; font-weight: bold; color: var(--secondary); }
 
+/* Tabel Detail Jawaban */
 #detail-container {
-    max-height: 250px; overflow-y: auto; margin: 20px 0; border: 1px solid #eee; border-radius: 10px;
+    max-height: 250px; overflow-y: auto; margin: 20px 0; border-radius: 15px; border: 2px solid #f0f0f0;
 }
 
-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-th { background: #f4f4f4; padding: 10px; position: sticky; top: 0; }
-td { padding: 8px; border-bottom: 1px solid #eee; }
-.row-correct { color: var(--primary); font-weight: bold; }
-.row-wrong { color: #f44336; font-weight: bold; }
+table { width: 100%; border-collapse: collapse; }
+th { background: var(--secondary); color: white; padding: 12px; }
+td { padding: 10px; border-bottom: 1px solid #f9f9f9; }
 
+/* Tombol-tombol Ceria */
 button { 
-    background: var(--secondary); color: white; border: none; padding: 18px; border-radius: 12px; 
-    font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; 
+    background: var(--secondary); color: white; border: none; padding: 18px; border-radius: 20px; 
+    font-size: 1.2rem; font-weight: bold; cursor: pointer; width: 100%; 
+    box-shadow: 0 6px 0px #38938c; transition: all 0.1s;
 }
-.btn-restart { background: var(--primary); }
+
+button:active { transform: translateY(4px); box-shadow: 0 2px 0px #38938c; }
+
+.btn-restart { background: var(--primary); box-shadow: 0 6px 0px #D64545; }
+.btn-restart:active { box-shadow: 0 2px 0px #D64545; }
+
+/* Styling Radio Button Mode */
+.mode-selector {
+    background: #f0f0f0; padding: 10px; border-radius: 15px; margin-bottom: 20px;
+}
+
+.mode-selector p {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.8;
+}
+
+.mode-selector label {
+    display: inline-block;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 2px solid transparent;
+}
+
+.mode-selector input[type="radio"]:checked + label, 
+.mode-selector label:has(input[type="radio"]:checked) {
+    background: var(--accent);
+    border-color: var(--primary);
+}

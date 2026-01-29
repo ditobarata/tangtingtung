@@ -10,8 +10,23 @@
 
 <div id="game-container">
     <div id="start-screen">
-        <h1>🔢 Jago Kali</h1>
-        <p>Selesaikan 50 soal perkalian puluhan secepat mungkin!</p>
+        <h1>🔢 Jago Hitung</h1>
+        
+        <input type="text" id="player-name" placeholder="Masukkan namamu..." style="margin-bottom: 15px; padding: 15px; width: 80%; border-radius: 15px; border: 2px solid #eee; font-size: 1rem;">
+        
+        <div class="mode-selector">
+            <p><strong>Pilih Operasi:</strong></p>
+            <label><input type="radio" name="game-mode" value="perkalian" checked> ✖️ Kali</label>
+            <label style="margin-left: 20px;"><input type="radio" name="game-mode" value="pembagian"> ➗ Bagi</label>
+        </div>
+
+        <div class="mode-selector">
+            <p><strong>Pilih Level:</strong></p>
+            <label><input type="radio" name="game-level" value="mudah"> 🌱 Mudah</label>
+            <label style="margin-left: 15px;"><input type="radio" name="game-level" value="sedang" checked> 🌿 Sedang</label>
+            <label style="margin-left: 15px;"><input type="radio" name="game-level" value="sulit"> 🌳 Sulit</label>
+        </div>
+
         <button onclick="startGame()">Mulai Bermain</button>
     </div>
 
@@ -24,7 +39,7 @@
     </div>
 
     <div id="result-screen" class="hidden">
-        <h2>Selesai! 🎉</h2>
+        <h2>Selesai, <span id="display-name"></span>! 🎉</h2>
         <div class="stats-grid">
             <div class="stat-card"><small>Benar</small><div id="final-correct" class="correct-text">0</div></div>
             <div class="stat-card"><small>Total Waktu</small><div id="final-time" class="time-text">0s</div></div>
@@ -42,6 +57,9 @@
         <button onclick="location.reload()" class="btn-restart">Main Lagi</button>
     </div>
 </div>
+
+<audio id="snd-correct" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
+<audio id="snd-wrong" src="https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3"></audio>
 
 <script src="script.js"></script>
 </body>
