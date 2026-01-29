@@ -21,13 +21,12 @@ body {
 
 #game-container { 
     background: white; 
-    padding: 30px; 
-    border-radius: 30px; /* Lebih bulat */
+    padding: 20px; /* Dikurangi sedikit agar lebih luas di HP */
+    border-radius: 25px; 
     box-shadow: 0 15px 0px rgba(0,0,0,0.05), 0 20px 40px rgba(0,0,0,0.1); 
-    width: 100%; 
-    max-width: 420px; 
-    text-align: center;
-    border: 4px solid #f0f0f0;
+    width: 95%; /* Pastikan tidak mentok ke pinggir layar */
+    max-width: 400px; 
+    box-sizing: border-box; /* Sangat penting agar padding tidak menambah lebar */
 }
 
 h1 { color: var(--primary); font-size: 2.5rem; margin-top: 0; }
@@ -47,8 +46,11 @@ h1 { color: var(--primary); font-size: 2.5rem; margin-top: 0; }
 
 /* Soal lebih besar dan berwarna */
 .question { 
-    font-size: 3.5rem; font-weight: 900; margin: 20px 0; color: var(--text); 
-    text-shadow: 2px 2px 0px var(--accent);
+    font-size: 2.5rem; /* Dikurangi dari 3.5rem agar tidak pecah baris */
+    font-weight: 900; 
+    margin: 15px 0; 
+    color: var(--text); 
+    word-wrap: break-word;
 }
 
 /* Input angka lebih menarik */
@@ -69,10 +71,16 @@ input#answer:focus { border-color: var(--accent); outline: none; }
 
 /* Tabel Detail Jawaban */
 #detail-container {
-    max-height: 250px; overflow-y: auto; margin: 20px 0; border-radius: 15px; border: 2px solid #f0f0f0;
+    max-height: 200px; 
+    overflow-x: auto; /* Memungkinkan geser horizontal jika tabel terlalu lebar */
 }
 
-table { width: 100%; border-collapse: collapse; }
+table { 
+    width: 100%; 
+    min-width: 300px; /* Mencegah kolom berhimpitan */
+    font-size: 0.8rem; /* Font lebih kecil untuk tabel */
+}
+
 th { background: var(--secondary); color: white; padding: 12px; }
 td { padding: 10px; border-bottom: 1px solid #f9f9f9; }
 
@@ -88,26 +96,40 @@ button:active { transform: translateY(4px); box-shadow: 0 2px 0px #38938c; }
 .btn-restart { background: var(--primary); box-shadow: 0 6px 0px #D64545; }
 .btn-restart:active { box-shadow: 0 2px 0px #D64545; }
 
+@media (max-width: 360px) {
+    h1 { font-size: 1.8rem; }
+    .question { font-size: 2rem; }
+    input#answer { font-size: 1.5rem; }
+}
+
 /* Styling Radio Button Mode */
 .mode-selector {
-    background: #f0f0f0; padding: 10px; border-radius: 15px; margin-bottom: 20px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 18px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column; /* Susun ke bawah */
+    align-items: center;
+    gap: 10px;
 }
 
 .mode-selector p {
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-    color: var(--text);
-    opacity: 0.8;
+    margin: 0 0 5px 0;
+    font-weight: bold;
 }
 
 .mode-selector label {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: white;
-    padding: 8px 12px;
-    border-radius: 10px;
+    padding: 10px 20px;
+    border-radius: 12px;
     cursor: pointer;
+    width: 80%; /* Lebar seragam */
+    border: 2px solid #eee;
     transition: 0.2s;
-    border: 2px solid transparent;
 }
 
 .mode-selector input[type="radio"]:checked + label, 
