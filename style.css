@@ -1,0 +1,67 @@
+:root {
+    --primary: #4CAF50;
+    --secondary: #2196F3;
+    --bg: #f4f7f6;
+    --text: #333;
+}
+
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background: var(--bg); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    min-height: 100vh;
+    margin: 0; 
+    padding: 20px; 
+}
+
+#game-container { 
+    background: white; 
+    padding: 30px; 
+    border-radius: 20px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    width: 100%; 
+    max-width: 400px; 
+    text-align: center; 
+}
+
+/* Ini sangat penting agar layar lain tersembunyi */
+.hidden { display: none !important; }
+
+#progress-bar { 
+    width: 100%; height: 12px; background: #eee; border-radius: 10px; margin-bottom: 20px; overflow: hidden;
+}
+
+#progress-fill { 
+    height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; 
+}
+
+.question { font-size: 3rem; font-weight: bold; margin: 25px 0; color: var(--text); }
+
+input#answer { 
+    font-size: 1.8rem; width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 12px; 
+    text-align: center; margin-bottom: 20px; box-sizing: border-box;
+}
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+.stat-card { background: #f9f9f9; padding: 15px; border-radius: 12px; border: 1px solid #eee; }
+
+.correct-text { color: var(--primary); font-size: 1.5rem; font-weight: bold; }
+.time-text { font-size: 1.5rem; font-weight: bold; color: var(--text); }
+
+#detail-container {
+    max-height: 250px; overflow-y: auto; margin: 20px 0; border: 1px solid #eee; border-radius: 10px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th { background: #f4f4f4; padding: 10px; position: sticky; top: 0; }
+td { padding: 8px; border-bottom: 1px solid #eee; }
+.row-correct { color: var(--primary); font-weight: bold; }
+.row-wrong { color: #f44336; font-weight: bold; }
+
+button { 
+    background: var(--secondary); color: white; border: none; padding: 18px; border-radius: 12px; 
+    font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; 
+}
+.btn-restart { background: var(--primary); }
