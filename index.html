@@ -12,24 +12,35 @@
     <div id="start-screen">
         <h1>🔢 Jago Hitung</h1>
         
-        <input type="text" id="player-name" placeholder="Masukkan namamu..." style="margin-bottom: 15px; padding: 15px; width: 80%; border-radius: 15px; border: 2px solid #eee; font-size: 1rem;">
+        <input type="text" id="player-name" placeholder="Masukkan namamu..." autocomplete="off">
         
         <div class="mode-selector">
-            <p><strong>Pilih Operasi:</strong></p>
-            <label><input type="radio" name="game-mode" value="perkalian" checked> ✖️ Kali</label>
-            <label><input type="radio" name="game-mode" value="pembagian"> ➗ Bagi</label>
-        </div>
+            <div class="input-group">
+                <label for="game-mode">Operasi:</label>
+                <select id="game-mode">
+                    <option value="perkalian">✖️ Perkalian</option>
+                    <option value="pembagian">➗ Pembagian</option>
+                </select>
+            </div>
 
-        <div class="mode-selector">
-            <p><strong>Pilih Level:</strong></p>
-            <label><input type="radio" name="game-level" value="mudah"> 🌱 Mudah</label>
-            <label><input type="radio" name="game-level" value="sedang" checked> 🌿 Sedang</label>
-            <label><input type="radio" name="game-level" value="sulit"> 🌳 Sulit</label>
+            <div class="input-group">
+                <label for="game-level">Level:</label>
+                <select id="game-level">
+                    <option value="mudah">🌱 Mudah</option>
+                    <option value="sedang" selected>🌿 Sedang</option>
+                    <option value="sulit">🌳 Sulit</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="total-questions">Jumlah Soal:</label>
+                <input type="number" id="total-questions" value="50" min="1" max="100" style="padding: 8px; border-radius: 8px; border: 1px solid #ddd; width: 60px; text-align: center;">
+            </div>
         </div>
 
         <button onclick="startGame()">Mulai Bermain</button>
     </div>
-
+    
     <div id="game-screen" class="hidden">
         <div id="progress-bar"><div id="progress-fill"></div></div>
         <p>Soal ke: <span id="current-count">1</span> / 50</p>

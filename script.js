@@ -4,20 +4,40 @@ let startTime, questionStartTime;
 let num1, num2, displayNum1, displayNum2, answer;
 let gameMode = "perkalian";
 let gameLevel = "sedang";
-const totalQuestions = 50;
+let totalQuestions = 50;
 let logs = [];
 let playerName = "";
 
 function startGame() {
     const nameInput = document.getElementById('player-name');
-    playerName = nameInput.value.trim() || "Pemain Anonim"; // Default jika kosong
-    gameMode = document.querySelector('input[name="game-mode"]:checked').value;
-    gameLevel = document.querySelector('input[name="game-level"]:checked').value;
+    playerName = nameInput.value.trim() || "Pemain Anonim";
 
+    // Simpan nama ke localStorage
+    if (playerName !== "Pemain Anonim") {
+        localStorage.setItem('savedPlayerName', playerName);
+    }
+
+    // AMBIL DATA DARI DROPDOWN (Penting: Gunakan .value langsung)
+    gameMode = document.getElementById('game-mode').value;
+    gameLevel = document.getElementById('game-level').value;
+    
+    // Ambil jumlah soal
+    const questionsInput = document.getElementById('total-questions');
+    totalQuestions = parseInt(questionsInput.value) || 50;
+
+    // Reset data permainan agar tidak menumpuk dari sesi sebelumnya
+    currentQuestion = 0;
+    correctAnswers = 0;
+    logs = [];
+
+    // Sembunyikan layar menu, tampilkan layar game
     document.getElementById('start-screen').classList.add('hidden');
     document.getElementById('game-screen').classList.remove('hidden');
     document.getElementById('result-screen').classList.add('hidden');
     
+    // Update teks info jumlah soal di layar game
+    document.querySelector('#game-screen p').innerHTML = `Soal ke: <span id="current-count">1</span> / ${totalQuestions}`;
+
     startTime = new Date();
     nextQuestion();
 }
@@ -115,3 +135,10 @@ function endGame() {
         </tr>
     `).join('');
 }
+
+window.onload = function() {
+    const savedName = localStorage.getItem('savedPlayerName');
+    if (savedName) {
+        document.getElementById('player-name').value = savedName;
+    }
+};
