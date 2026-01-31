@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jago Kali - Tantangan 50 Soal</title>
+    <title>Jago Hitung - Tantangan 50 Soal</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -39,6 +39,7 @@
         </div>
 
         <button onclick="startGame()">Mulai Bermain</button>
+        <button onclick="showHistory()" style="background: var(--accent); color: var(--text); margin-top: 10px; box-shadow: 0 6px 0px #d4bc4d;">📊 Lihat Catatan</button>
     </div>
     
     <div id="game-screen" class="hidden">
@@ -67,11 +68,21 @@
         </div>
         <button onclick="location.reload()" class="btn-restart">Main Lagi</button>
     </div>
+
+    <div id="history-screen" class="hidden">
+        <h2>Catatan Belajar 📈</h2>
+        <div id="calendar-heatmap" style="background: white; padding: 15px; border-radius: 15px; margin-bottom: 20px; overflow-x: auto;">
+            </div>
+        <div id="history-stats" style="margin-bottom: 20px; font-size: 0.9rem;"></div>
+        <button onclick="hideHistory()" class="btn-restart">Kembali</button>
+    </div>
 </div>
 
 <audio id="snd-correct" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
 <audio id="snd-wrong" src="https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3"></audio>
 
 <script src="script.js"></script>
+<script src="script_history.js"></script>
+
 </body>
 </html>

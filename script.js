@@ -134,6 +134,8 @@ function endGame() {
             <td class="${log.cls}">${log.res}</td>
         </tr>
     `).join('');
+
+    saveToHistory();
 }
 
 window.onload = function() {

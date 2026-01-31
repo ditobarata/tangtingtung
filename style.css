@@ -173,3 +173,18 @@ select:focus, #total-questions:focus {
     outline: none;
     background-color: #fff;
 }
+
+#start-screen, #game-screen, #result-screen {
+    animation: fadeIn 0.4s ease-out;
+}
+
+#history-screen {
+    max-height: 80vh; 
+    overflow-y: auto; /* Biar bisa di-scroll ke bawah kalau bulannya banyak */
+    padding-bottom: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
